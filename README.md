@@ -71,3 +71,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 Recommend： おすすめ
+
+TODO:
+1. 非top stories的card title最多两行折叠[DONE]
+8. full lists[DONE]
+9. article detail[DONE]
+4. 头条滚动播放[DONE]
+5. 小屏幕最好只要一个列表并且图片高度变大，突出[DONE]
+6. 图片列表分页 or loader more?
+
+美化：
+2. top stories的card title显示，每个card长度宽度保持一致[DONE]
+11. font size setting at breakponit sm
+3. article header hover变色[DONE]
+7. author jumping
+8. tag jumping
+9. 
+
+

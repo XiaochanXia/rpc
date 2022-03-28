@@ -1,22 +1,29 @@
 [
     {
+        "id": "1007",
         "title": "米長期金利の上昇に歯止めはかかるか (野村のオピニオン)",
-        "publishTime": "03/13 20:00",
-        "author": "編集部",
+        "publishTime": "03/13/2020 20:00",
+        "author": "铃木敏行",
         "tags": [
             "エクイティ",
             "米長期金利"
         ],
-        "imgUrl": "../assets/images/mi_img.png"
+        "imgUrl": "../assets/images/mi_img.png",
+        "preBody": "米長期金利の上昇に歯止めはかかるか (野村のオピニオン)米長期金利の上昇に歯止めはかかるか (野村のオピニオン)"
     },
     {
+        "id": "1008",
         "title": "3つの原油シナリオと日本株式市場の考え方(市場展望)",
         "publishTime": "03/13 20:00",
-        "author": "編集部",
+        "author": "铃木敏行",
         "tags": [
             "エクイティ",
-            "原油"
+            "原油",
+            "米長期金利",
+            "オピニオン",
+            "はかかるか"
         ],
-        "imgUrl": "../assets/images/mi_img.png"
+        "imgUrl": "../assets/images/mi_img.png",
+        "preBody": "米長期金利の上昇に歯止めはかかるか (野村のオピニオン)米長期金利の上昇に歯止めはかかるか (野村のオピニオン)"
     }
 ]

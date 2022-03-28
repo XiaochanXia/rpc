@@ -1,36 +1,80 @@
 import PropTyeps from 'prop-types';
-import { Card, Typography, CardContent, CardMedia, Chip, Box, CardActionArea, CardActions, Button } from '@mui/material';
+import { Card, Typography, CardContent, CardMedia, Chip, Box, CardActionArea, CardActions, Button, Link } from '@mui/material';
 import MiImage from '../assets/images/mi_img.png';
-import { ArrowRight } from '@mui/icons-material';
+import { ArrowForward } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { idID } from '@mui/material/locale';
 
 // TODO: add breakpont for font-size
 export default function TopArticleCard(props) {
-    const { title, imgUrl, publishTime, author, tags = [] } = props;
+    const navigate = useNavigate();
+    const { title, imgUrl, publishTime, author, tags = [], body, preBody, id } = props;
 
-    return <Card sx={{ display: 'flex', flexDirection: 'column', marginRight: 2, marginTop: 2 }}>
-        <Box sx={{ display: 'flex', width: 200, height: 200 }}>
+    const goArticleDetail = () => {
+        navigate("/tops/article/" + id);
+    }
+
+    return <Card sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: '1 1 auto',
+        marginTop: 2,
+        marginLeft: 3,
+        marginBottom: 1
+    }} >
+        <Box sx={{
+            display: 'flex',
+            width: '100%',
+            height: { xs: 100, md: 100, lg: 200 },
+            cursor: 'pointer'
+        }}
+            onClick={goArticleDetail}>
             <CardMedia
                 component="img"
                 image={MiImage}
-                sx={{ width: 180, height: 180 }}
                 alt="Article Card Image"
             />
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto' }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography component="div" variant="h5">
-                    {title}
+                <Typography variant="subtitle1" color="text.secondary">
+                    {publishTime} <Link underline='hover'>{author}</Link>
                 </Typography>
-                {/* <Box sx={{ paddingBottom: 2, paddingTop: 2 }}>
-                    {tags.map(tag => <Chip key={tag} label={tag} size="xs" sx={{ marginRight: 1, marginTop: 1 }} />)}
-                </Box> */}
-                {/* <Typography variant="subtitle1" color="text.secondary" component="div">
-                    {publishTime} {author}
-                </Typography> */}
+                <Link underline="hover"
+                    color="secondary"
+                    component={Typography}
+                    variant="h5"
+                    sx={{
+                        '-webkit-line-clamp': '3',
+                        '-webkit-box-orient': 'vertical',
+                        wordBreak: 'break-all',
+                        display: '-webkit-box',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        fontWeight: 'bold',
+                    }}
+                    href={`/tops/article/${id}`}
+                >{title}
+                </Link>
+                <Typography variant="body1" color="text.secondary"
+                    sx={{
+                        '-webkit-line-clamp': '2',
+                        '-webkit-box-orient': 'vertical',
+                        wordBreak: 'break-all',
+                        display: '-webkit-box',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                    }}
+                    mt={1}>
+                    {preBody}
+                </Typography>
             </CardContent>
             <CardActionArea>
                 <CardActions>
-                    <Button variant="contained" color="secondary" endIcon={<ArrowRight />}>続きを読む</Button>
+                    <Button variant="contained"
+                        color="secondary"
+                        endIcon={<ArrowForward />}
+                        onClick={goArticleDetail}>続きを読む</Button>
                 </CardActions>
             </CardActionArea>
         </Box>
@@ -43,4 +87,6 @@ TopArticleCard.propsTypes = {
     publishTime: PropTyeps.string,
     author: PropTyeps.string,
     tags: PropTyeps.array,
+    id: PropTyeps.string,
+    preBody: PropTyeps.string,
 }

@@ -1,6 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
+import {
+    MemoryRouter,
+    Route,
+    Routes,
+    useLocation,
+} from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,13 +22,34 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import { useTheme } from '@mui/material/styles';
 import LandingPage from './pages/LandingPage';
 import MyPage from './pages/MyPage';
 import EquityPage from './pages/Equity';
 import FXPage from './pages/FX';
+import Tabs from './Tabs';
+import { RouteConfigs } from './routes';
+import SearchPage from './pages/SearchPage';
+import FullTopArticles  from './pages/tops/FullTopArticles';
+import FullTreadingPage from './pages/treads/FullTreadingPage';
+import FullLatestArticles from './pages/latest/FullLatestPage';
+import LatestArticleDetailPage from './pages/latest/LatestArticleDetailPage';
+import TopArticleDetailPage from './pages/tops/TopArticleDetailPage';
+import TreadingArticleDetailPage from './pages/treads/TreadingArticleDetailPage';
+
+function Router(props) {
+    const { children } = props;
+
+    return (
+        <MemoryRouter initialEntries={['/index']} initialIndex={0}>
+            {children}
+        </MemoryRouter>
+    );
+}
+
+Router.propTypes = {
+    children: PropTypes.node,
+};
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -64,37 +91,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const StyledTabs = styled((props) => (
-    <Tabs
-        {...props}
-        TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-    />
-))({
-    '& .MuiTabs-indicator': {
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-    },
-    '& .MuiTabs-indicatorSpan': {
-        width: '100%',
-        backgroundColor: '#ffffff',
-    },
-});
-
-const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
-    ({ theme }) => ({
-        textTransform: 'none',
-        fontWeight: theme.typography.fontWeightRegular,
-        color: alpha(theme.palette.common.white, 0.7),
-        '&.Mui-selected': {
-            color: theme.palette.common.white,
-        },
-        '&.Mui-focusVisible': {
-            backgroundColor: 'rgba(100, 95, 228, 0.32)',
-        },
-    }),
-);
-
 
 
 function TabPanel(props) {
@@ -108,11 +104,9 @@ function TabPanel(props) {
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
         >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+            <Box sx={{ p: 3 }}>
+                {children}
+            </Box>
         </div>
     );
 }
@@ -123,12 +117,18 @@ TabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
+
+
+function CurrentRoute() {
+    const location = useLocation();
+
+    return (
+        <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
+            Current route: {location.pathname}
+        </Typography>
+    );
 }
+
 
 export default function MainAppBar() {
     const theme = useTheme();
@@ -154,10 +154,6 @@ export default function MainAppBar() {
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
     };
 
     const handleChangeIndex = (index) => {
@@ -230,117 +226,121 @@ export default function MainAppBar() {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'block', sm: 'block', lg: 'block' } }}
-                    >
-                        NOMURA
-                    </Typography>
-                    <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, flexGrow: 1 }}>
-                        <Search sx={{ flexGrow: 1 }}>
-                            <SearchIconWrapper>
+        <Router>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 2 }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: 'block', sm: 'block', lg: 'block' } }}
+                        >
+                            NOMURA
+                        </Typography>
+                        <Box sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, flexGrow: 1 }}>
+                            <Search sx={{ flexGrow: 1 }}>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="検索"
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </Search>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 1 }} />
+                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
                                 <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="検索"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <SearchIcon />
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-                <StyledTabs
-                    value={value}
-                    onChange={handleChange}
-                    textColor="inherit"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    allowScrollButtonsMobile
-                    aria-label="full width tabs example"
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+                            >
+                                <MoreIcon />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                    <Tabs routes={RouteConfigs} />
+                </AppBar>
+                {renderMobileMenu}
+                {renderMenu}
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={value}
+                    onChangeIndex={handleChangeIndex}
                 >
-                    <StyledTab label="ホーム" {...a11yProps(0)} />
-                    <StyledTab label="マイページ" {...a11yProps(1)} />
-                    <StyledTab label="债券" {...a11yProps(2)} />
-                    <StyledTab label="株式" {...a11yProps(3)} />
-                </StyledTabs>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-            <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            >
-                <TabPanel value={value} index={0} dir={theme.direction}>
-                    <LandingPage />
-                </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
-                    <MyPage />
-                </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
-                    <EquityPage />
-                </TabPanel>
-                <TabPanel value={value} index={3} dir={theme.direction}>
-                    <FXPage />
-                </TabPanel>
-            </SwipeableViews>
-        </Box >
+                    <TabPanel value={value} index={value} dir={theme.direction}>
+                        <Routes>
+                            <Route path="/latest/article/:id" element={<LatestArticleDetailPage />} />
+                            <Route path="/tops/article/:id" element={<TopArticleDetailPage />} />
+                            <Route path="/treads/article/:id" element={<TreadingArticleDetailPage />} />
+                            <Route path="/index/fullList/tops" element={<FullTopArticles />} />
+                            <Route path="/index/fullList/treads" element={<FullTreadingPage />} />
+                            <Route path="/index/fullList/latest" element={<FullLatestArticles />} />
+                            <Route path="/search" element={<SearchPage />} />
+                            <Route path="/index" element={
+                                <LandingPage />}>
+                            </Route>
+                            <Route path="/myPage" element={
+                                <MyPage />
+                            }>
+                            </Route>
+                            <Route path="/equity" element={
+                                <EquityPage />
+                            }>
+                            </Route>
+                            <Route path="/fx" element={
+                                <FXPage />
+                            }>
+                            </Route>
+
+                        </Routes>
+                    </TabPanel>
+                </SwipeableViews>
+            </Box >
+        </Router>
     );
 }
