@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import {
+    BrowserRouter,
     MemoryRouter,
     Route,
     Routes,
@@ -41,9 +42,9 @@ function Router(props) {
     const { children } = props;
 
     return (
-        <MemoryRouter initialEntries={['/index']} initialIndex={0}>
+        <BrowserRouter basename='/'>
             {children}
-        </MemoryRouter>
+        </BrowserRouter>
     );
 }
 
@@ -116,18 +117,6 @@ TabPanel.propTypes = {
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
 };
-
-
-
-function CurrentRoute() {
-    const location = useLocation();
-
-    return (
-        <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
-            Current route: {location.pathname}
-        </Typography>
-    );
-}
 
 
 export default function MainAppBar() {
@@ -314,14 +303,17 @@ export default function MainAppBar() {
                 >
                     <TabPanel value={value} index={value} dir={theme.direction}>
                         <Routes>
-                            <Route path="/latest/article/:id" element={<LatestArticleDetailPage />} />
-                            <Route path="/tops/article/:id" element={<TopArticleDetailPage />} />
-                            <Route path="/treads/article/:id" element={<TreadingArticleDetailPage />} />
+                            <Route path="/index/latest/article/:id" element={<LatestArticleDetailPage />} />
+                            <Route path="/index/tops/article/:id" element={<TopArticleDetailPage />} />
+                            <Route path="/index/treads/article/:id" element={<TreadingArticleDetailPage />} />
                             <Route path="/index/fullList/tops" element={<FullTopArticles />} />
                             <Route path="/index/fullList/treads" element={<FullTreadingPage />} />
                             <Route path="/index/fullList/latest" element={<FullLatestArticles />} />
                             <Route path="/search" element={<SearchPage />} />
                             <Route path="/index" element={
+                                <LandingPage />}>
+                            </Route>
+                            <Route path="*" element={
                                 <LandingPage />}>
                             </Route>
                             <Route path="/myPage" element={

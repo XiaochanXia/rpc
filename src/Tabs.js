@@ -5,9 +5,6 @@ import {
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import {
-    MemoryRouter,
-    Route,
-    Routes,
     Link,
     matchPath,
     useLocation,
@@ -29,7 +26,6 @@ const StyledTabs = styled((props) => (
         backgroundColor: '#ffffff',
     },
 });
-
 
 const StyledTab = styled((props) => <MuiTab disableRipple {...props} />)(
     ({ theme }) => ({
@@ -57,9 +53,8 @@ function useRouteMatch(patterns) {
 
     for (let i = 0; i < patterns.length; i += 1) {
         const pattern = patterns[i];
-        const possibleMatch = matchPath(pattern, pathname);
-        if (possibleMatch !== null) {
-            return possibleMatch;
+        if (pathname.includes(pattern)) {
+            return pattern;
         }
     }
 
@@ -71,8 +66,7 @@ export default function Tabs(props) {
     // This means that if you have nested routes like:
     // users, users/new, users/edit.
     const routePaths = props.routes.map(route => route.value);
-    const routeMatch = useRouteMatch(routePaths);
-    const currentTab = routeMatch?.pattern?.path;
+    const currentTab = useRouteMatch(routePaths);
 
     return (
         <StyledTabs

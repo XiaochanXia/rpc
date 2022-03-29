@@ -3,7 +3,6 @@ import { Card, Typography, CardContent, CardMedia, Chip, Box, CardActionArea, Ca
 import MiImage from '../assets/images/mi_img.png';
 import { ArrowForward } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { idID } from '@mui/material/locale';
 
 // TODO: add breakpont for font-size
 export default function TopArticleCard(props) {
@@ -11,7 +10,7 @@ export default function TopArticleCard(props) {
     const { title, imgUrl, publishTime, author, tags = [], body, preBody, id } = props;
 
     const goArticleDetail = () => {
-        navigate("/tops/article/" + id);
+        navigate("/index/tops/article/" + id);
     }
 
     return <Card sx={{
@@ -53,7 +52,7 @@ export default function TopArticleCard(props) {
                         textOverflow: 'ellipsis',
                         fontWeight: 'bold',
                     }}
-                    href={`/tops/article/${id}`}
+                    href={`/index/tops/article/${id}`}
                 >{title}
                 </Link>
                 <Typography variant="body1" color="text.secondary"

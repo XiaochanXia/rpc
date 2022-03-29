@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Typography, Box, Breadcrumbs, styled } from "@mui/material";
+import { Typography, Box, Breadcrumbs, styled, Divider } from "@mui/material";
 import { NavigateNext } from '@mui/icons-material';
 import TagsWrapper from './TagsWrapper';
 
@@ -32,9 +32,10 @@ export default function ArticleDetail(props) {
         <Box sx={{ marginTop: 2 }}>
             <article className='article'>
                 <header><Typography variant="h4">{title}</Typography></header>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
+                <Typography variant="subtitle1" color="text.secondary" component="div" mb={2} mt={1}>
                     {publishTime} {author}
                 </Typography>
+                <Divider />
                 <TagsWrapper tags={tags} />
                 <img loading="lazy" width="2235" height="1341" src="https://media.fintos.jp/image/iStock-576566188.jpg" alt="" />
                 <div className='article-body' dangerouslySetInnerHTML={{ __html: decodedBody }}>

@@ -39,7 +39,7 @@ export default function LandingPage() {
         // the max size is 3;
         return TopArticles.slice(0, 3).map(article => (<Grid xs={12} md={6} lg={4} sx={{ display: 'flex' }}>
             <TopArticleCard {...article}
-                path="/tops/article"
+                path="/index/tops/article"
             />
         </Grid>));
     }
@@ -59,7 +59,7 @@ export default function LandingPage() {
         return nextTopArticles.map(group => {
             return <Grid item container>
                 {group.map(article => <Grid xs item sx={{ display: 'flex' }}><TopArticleCard {...article}
-                    path="/tops/article"
+                    path="/index/tops/article"
                 />
                 </Grid>
                 )}
@@ -94,13 +94,13 @@ export default function LandingPage() {
             </Grid>
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' } }}>
                 {LatestArticles.map(article => (<Grid xs={12} md={6} lg={12} sx={{ display: 'flex' }}><ArticleCard {...article}
-                    path="/latest/article"
+                    path="/index/latest/article"
                 ></ArticleCard>
                 </Grid>))}
             </Grid>
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ display: { xs: 'flex', md: 'none', lg: 'none' } }}>
                 {LatestArticles.slice(0, 1).map(article => (<Grid xs={12} md={6} lg={12} sx={{ display: 'flex' }}><ArticleCard {...article}
-                    path="/latest/article"
+                    path="/index/latest/article"
                 ></ArticleCard>
                 </Grid>))}
             </Grid>
@@ -111,13 +111,13 @@ export default function LandingPage() {
             </Grid>
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' } }}>
                 {TreadingArticles.map(article => (<Grid xs={12} md={6} lg={6} sx={{ display: 'flex' }}><ArticleCard {...article}
-                    path="/treads/article"
+                    path="/index/treads/article"
                 ></ArticleCard>
                 </Grid>))}
             </Grid>
             <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 3 }} sx={{ display: { xs: 'flex', md: 'none', lg: 'none' } }}>
                 {TreadingArticles.slice(0, 1).map(article => (<Grid xs={12} md={6} lg={6} sx={{ display: 'flex' }}><ArticleCard {...article}
-                    path="/treads/article"
+                    path="/index/treads/article"
                 ></ArticleCard>
                 </Grid>))}
             </Grid>
