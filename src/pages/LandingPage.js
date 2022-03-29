@@ -11,6 +11,7 @@ import TopArticles from '../data/TopArticles.json';
 import TreadingArticles from '../data/TreadingArticles.json';
 import Tags from '../data/allTags.json';
 import MobileCarousel from '../components/MobileCarousel';
+import TagsWrapper from '../components/TagsWrapper';
 
 export default function LandingPage() {
     const navigate = useNavigate();
@@ -126,9 +127,7 @@ export default function LandingPage() {
                 <ListHeaders text="すべての分類" hasMore={true} clickMore={goSearchPage} />
             </Grid>
             <Grid>
-                <Box>
-                    {Tags.map(tag => <Chip key={tag} label={tag} sx={{ margin: 1 }}></Chip>)}
-                </Box>
+                <TagsWrapper tags={Tags} />
             </Grid>
         </Grid>
     </Grid>
